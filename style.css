@@ -1,0 +1,78 @@
+:root {
+  --buttonColor: gray;
+  --backGroundColor: #191923;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--backGroundColor);
+}
+
+#container {
+  height: 90%;
+  width: 30%;
+  background-color: rgb(152, 152, 152);
+  border-radius: 15px;
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  box-shadow: black 0 0 10px;
+}
+
+#screen {
+  width: 90%;
+  height: 20%;
+  background-color: #0b300d;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 1px #051806 inset;
+}
+
+#buttons {
+  height: 60%;
+  width: 90%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.twoColumns {
+  grid-column: span 2;
+}
+
+button {
+  background-color: var(--buttonColor);
+  border-radius: 5px;
+  border: none;
+  font-size: 2rem;
+  color: white;
+  box-shadow: inset -3px -3px 0 0 #00000066;
+  box-sizing: border-box;
+  transition: 0.2s;
+}
+
+.buttonClicked {
+  background-color: oklch(from var(--buttonColor) calc(l * 0.85) c h);
+  box-shadow: none;
+  scale:0.98;
+  transform: translateY(1px);
+}
+
+.operationButton {
+  --buttonColor: green;
+}
+
+.twoColumns {
+  --buttonColor: orange;
+}
+
+#clear {
+  --buttonColor: darkslateblue;
+}
