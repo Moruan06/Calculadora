@@ -1,5 +1,6 @@
 const buttons = document.querySelectorAll("button");
-const display = document.querySelector("#screen");
+const resultDisplay = document.querySelector("#resultDisplay");
+const operationDisplay = document.querySelector("#operationDisplay");
 let operator = null;
 let firstNumber = "0";
 let secondNumber = "0";
@@ -14,7 +15,8 @@ function numberButtonClicked(buttonId) {
     } else {
       firstNumber += buttonId;
     }
-    display.textContent = firstNumber;
+    operationDisplay.textContent = firstNumber;
+    resultDisplay.textContent = firstNumber;
   } else {
     if (secondNumber === "0" || waitingForNewNumber) {
       secondNumber = buttonId;
@@ -22,14 +24,15 @@ function numberButtonClicked(buttonId) {
     } else {
       secondNumber += buttonId;
     }
-    display.textContent = `${firstNumber} ${operator} ${secondNumber}`;
-}}
+    operationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
+    resultDisplay.textContent = secondNumber;
+  }
+}
 
 function operationButtonClicked(op) {
-  if(operator !== null && secondNumber !== "0") startCalc();
+  if (operator !== null && secondNumber !== "0") startCalc();
   operator = op;
-  waitingForNewNumber = true
-  display.textContent = `${firstNumber} ${operator}`;
+  operationDisplay.textContent = `${firstNumber} ${operator}`;
 }
 
 function floatPointButtonClicked() {
@@ -40,7 +43,8 @@ function floatPointButtonClicked() {
     } else if (!firstNumber.includes(".")) {
       firstNumber += ".";
     }
-    display.textContent = firstNumber;
+    operationDisplay.textContent = firstNumber;
+    resultDisplay.textContent = firstNumber;
   } else {
     if (waitingForNewNumber) {
       secondNumber = "0.";
@@ -48,7 +52,8 @@ function floatPointButtonClicked() {
     } else if (!secondNumber.includes(".")) {
       secondNumber += ".";
     }
-    display.textContent = `${firstNumber} ${operator} ${secondNumber}`;
+    operationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
+    resultDisplay.textContent = secondNumber;
   }
 }
 
@@ -64,46 +69,50 @@ function startCalc() {
     "*": (a, b) => a * b,
   };
 
-  if (operations[operator] && !isNaN(num1) && !isNaN(num2)) {
-    result = operations[operator](num1, num2);
-    display.textContent = result;
+  result = operations[operator](num1, num2);
+  if (!isNaN(result) && isFinite(result)) {
+    resultDisplay.textContent = result;
     firstNumber = String(result);
     secondNumber = "0";
     operator = null;
     waitingForNewNumber = true;
   } else {
-    display.textContent = "Erro!";
     clearButton();
+    resultDisplay.textContent = "Erro";
   }
 }
 
-
 function deleteButtonClicked() {
-    if (operator !== null && secondNumber !== "0") { 
-        secondNumber = secondNumber.slice(0, -1);
-        if (secondNumber === "") {
-            secondNumber = "0";
-        }
-        display.textContent = `${firstNumber} ${operator}`;
-        return;
+  if (waitingForNewNumber) {
+    clearButton();
+    return;
+  }
+  if (operator !== null && secondNumber !== "0") {
+    secondNumber = secondNumber.slice(0, -1);
+    if (secondNumber === "") {
+      secondNumber = "0";
     }
-    if (operator !== null) {
-        operator = null;
-        display.textContent = firstNumber;
-        return;
+    operationDisplay.textContent = `${firstNumber} ${operator}`;
+    return;
+  }
+  if (operator !== null) {
+    operator = null;
+    operationDisplay.textContent = firstNumber;
+    return;
+  }
+  if (firstNumber !== "0") {
+    firstNumber = firstNumber.slice(0, -1);
+    if (firstNumber === "") {
+      firstNumber = "0";
     }
-    if (firstNumber !== "0") {
-        firstNumber = firstNumber.slice(0, -1);
-        if (firstNumber === "") {
-            firstNumber = "0";
-        }
-        display.textContent = firstNumber;
-        return;
-    }
+    operationDisplay.textContent = firstNumber;
+    return;
+  }
 }
 
 function clearButton() {
-  display.textContent = "0";
+  resultDisplay.textContent = "0";
+  operationDisplay.textContent = "";
   firstNumber = "0";
   secondNumber = "0";
   operator = null;
@@ -128,7 +137,7 @@ buttons.forEach((button) => {
       startCalc();
     } else if (button.id === "delete") {
       deleteButtonClicked();
-    } else if (button.id === "floatPoint"){
+    } else if (button.id === "floatPoint") {
       floatPointButtonClicked();
     }
   });
