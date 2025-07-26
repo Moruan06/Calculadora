@@ -3,6 +3,11 @@
   --backGroundColor: #191923;
 }
 
+@font-face {
+  font-family: 'DS-digital';
+  src: url(DS-DIGI.TTF) format('truetype');
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -31,8 +36,34 @@ body {
   width: 90%;
   height: 20%;
   background-color: #0b300d;
+  background-image: radial-gradient(green, #0b300d);
   border-radius: 5px;
-  box-shadow: 0 0 10px 1px #051806 inset;
+  box-shadow: 0 0 10px 3px #000 inset;
+  color: white;
+  font-family: 'DS-digital';
+  text-shadow: 0 0 5px #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: space-around;
+  padding-right: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+#resultDisplay{
+  font-size: 4em;
+  width: 100%;
+  text-align: right;
+  word-wrap: break-word;
+}
+
+#operationDisplay{
+  font-size: 1.5em;
+  min-height: 1.5em;
+  width: 100%;
+  text-align: right;
+  word-wrap: break-word;
 }
 
 #buttons {
