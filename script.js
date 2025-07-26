@@ -1,5 +1,5 @@
 const buttons = document.querySelectorAll("button");
-const resultDisplay = document.querySelector("#resultDisplay");
+const resultDisplay = document.querySelector("#resultDisplay p");
 const operationDisplay = document.querySelector("#operationDisplay");
 let operator = null;
 let firstNumber = "0";
@@ -71,7 +71,7 @@ function startCalc() {
 
   result = operations[operator](num1, num2);
   if (!isNaN(result) && isFinite(result)) {
-    resultDisplay.textContent = result;
+    resultDisplay.textContent = Number(result.toFixed(10));
     firstNumber = String(result);
     secondNumber = "0";
     operator = null;
