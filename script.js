@@ -6,6 +6,15 @@ let firstNumber = "0";
 let secondNumber = "0";
 let waitingForNewNumber = false;
 
+function applyButtonFeedback(buttonElement) {
+  if (buttonElement) {
+    buttonElement.classList.add('buttonClicked');
+    setTimeout(() => {
+      buttonElement.classList.remove('buttonClicked');
+    }, 300);
+  }
+}
+
 //Funções para o funcionamento dos botões:
 function numberButtonClicked(buttonId) {
   if (operator === null) {
@@ -134,11 +143,7 @@ function clearButton() {
 
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
-    //adiciona efeito que faz a tecla parecer que foi realmente clicada
-    button.classList.add("buttonClicked");
-    setTimeout(() => {
-      button.classList.remove("buttonClicked");
-    }, 300);
+    applyButtonFeedback(button)
 
     if (button.classList.contains("operationButton")) {
       operationButtonClicked(button.textContent);
