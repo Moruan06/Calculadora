@@ -8,9 +8,9 @@ let waitingForNewNumber = false;
 
 function applyButtonFeedback(buttonElement) {
   if (buttonElement) {
-    buttonElement.classList.add('buttonClicked');
+    buttonElement.classList.add("buttonClicked");
     setTimeout(() => {
-      buttonElement.classList.remove('buttonClicked');
+      buttonElement.classList.remove("buttonClicked");
     }, 300);
   }
 }
@@ -83,15 +83,19 @@ function startCalc() {
     const maxDisplayLength = 12;
     let fixedResult;
     const resultString = String(result);
-    if(resultString.length > maxDisplayLength){
+    if (resultString.length > maxDisplayLength) {
       let precision = maxDisplayLength - 5; // para caber os caracteres adicionais
 
-      if(precision < 0) precision = 0;
+      if (precision < 0) precision = 0;
       fixedResult = result.toExponential(precision);
-      fixedResult = fixedResult.replace(/(\.\d*?)0+e/, '  $1e').replace(/\.e/, 'e');
-    }else{fixedResult = Number(result.toFixed(10))};
+      fixedResult = fixedResult
+        .replace(/(\.\d*?)0+e/, "$1e")
+        .replace(/\.e/, "e");
+    } else {
+      fixedResult = Number(result.toFixed(10));
+    }
     resultDisplay.textContent = fixedResult;
-    firstNumber = resultString;
+    firstNumber = fixedResult;
     secondNumber = "0";
     operator = null;
     waitingForNewNumber = true;
@@ -143,7 +147,7 @@ function clearButton() {
 
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
-    applyButtonFeedback(button)
+    applyButtonFeedback(button);
 
     if (button.classList.contains("operationButton")) {
       operationButtonClicked(button.textContent);
@@ -161,40 +165,39 @@ buttons.forEach((button) => {
   });
 });
 
-
 //suporte para teclado
-document.addEventListener('keydown', (e) => {
+document.addEventListener("keydown", (e) => {
   let key = e.key;
   let code = e.code;
 
-  if(!isNaN(parseInt(key)) && key !== ' '){
-    if(key >= 0 && key<= 9){
+  if (!isNaN(parseInt(key)) && key !== " ") {
+    if (key >= 0 && key <= 9) {
       e.preventDefault();
       numberButtonClicked(key);
-      return
+      return;
     }
   }
 
   const keyboardMap = {
-      '+': () => operationButtonClicked('+'),
-      '-': () => operationButtonClicked('-'),
-      '*': () => operationButtonClicked('*'),
-      '/': () => operationButtonClicked('/'),
-      '.': () => floatPointButtonClicked(),
-      'Enter': () => startCalc(),
-      'Backspace': () => deleteButtonClicked(),
-      'NumpadAdd': () => operationButtonClicked('+'),
-      'NumpadSubtract': () => operationButtonClicked('-'),
-      'NumpadMultiply': () => operationButtonClicked('*'),
-      'NumpadDivide': () => operationButtonClicked('/'),
-      'NumpadEnter': () => startCalc(),
-  }
+    "+": () => operationButtonClicked("+"),
+    "-": () => operationButtonClicked("-"),
+    "*": () => operationButtonClicked("*"),
+    "/": () => operationButtonClicked("/"),
+    ".": () => floatPointButtonClicked(),
+    Enter: () => startCalc(),
+    Backspace: () => deleteButtonClicked(),
+    NumpadAdd: () => operationButtonClicked("+"),
+    NumpadSubtract: () => operationButtonClicked("-"),
+    NumpadMultiply: () => operationButtonClicked("*"),
+    NumpadDivide: () => operationButtonClicked("/"),
+    NumpadEnter: () => startCalc(),
+  };
 
-  if(keyboardMap[key]){
+  if (keyboardMap[key]) {
     e.preventDefault();
     keyboardMap[key]();
-  }else if(keyboardMap[code]){
+  } else if (keyboardMap[code]) {
     e.preventDefault();
     keyboardMap[code]();
   }
-})
+});

@@ -4,8 +4,8 @@
 }
 
 @font-face {
-  font-family: 'DS-digital';
-  src: url(DS-DIGI.TTF) format('truetype');
+  font-family: "DS-digital";
+  src: url(DS-DIGI.TTF) format("truetype");
 }
 
 body {
@@ -40,7 +40,7 @@ body {
   border-radius: 5px;
   box-shadow: 0 0 10px 3px #000 inset;
   color: white;
-  font-family: 'DS-digital';
+  font-family: "DS-digital";
   text-shadow: 0 0 5px #fff;
   display: flex;
   flex-direction: column;
@@ -51,7 +51,7 @@ body {
   overflow: hidden;
 }
 
-#resultDisplay{
+#resultDisplay {
   font-size: 4em;
   width: 100%;
   min-height: 64px;
@@ -59,7 +59,7 @@ body {
   position: relative;
 }
 
-p{
+p {
   overflow: hidden;
   white-space: nowrap;
   margin: 0;
@@ -67,7 +67,7 @@ p{
   right: 0;
 }
 
-#operationDisplay{
+#operationDisplay {
   font-size: 1.5em;
   min-height: 1.5em;
   width: 100%;
@@ -101,7 +101,7 @@ button {
 .buttonClicked {
   background-color: oklch(from var(--buttonColor) calc(l * 0.85) c h);
   box-shadow: none;
-  scale:0.98;
+  scale: 0.98;
   transform: translateY(1px);
 }
 
