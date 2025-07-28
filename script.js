@@ -102,12 +102,14 @@ function deleteButtonClicked() {
     if (secondNumber === "") {
       secondNumber = "0";
     }
-    operationDisplay.textContent = `${firstNumber} ${operator}`;
+    operationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
+    resultDisplay.textContent = `${secondNumber}`;
     return;
   }
   if (operator !== null) {
     operator = null;
     operationDisplay.textContent = firstNumber;
+    resultDisplay.textContent = firstNumber;
     return;
   }
   if (firstNumber !== "0") {
@@ -116,6 +118,7 @@ function deleteButtonClicked() {
       firstNumber = "0";
     }
     operationDisplay.textContent = firstNumber;
+    resultDisplay.textContent = firstNumber;
     return;
   }
 }
@@ -152,3 +155,41 @@ buttons.forEach((button) => {
     }
   });
 });
+
+
+//suporte para teclado
+document.addEventListener('keydown', (e) => {
+  let key = e.key;
+  let code = e.code;
+
+  if(!isNaN(parseInt(key)) && key !== ' '){
+    if(key >= 0 && key<= 9){
+      e.preventDefault();
+      numberButtonClicked(key);
+      return
+    }
+  }
+
+  const keyboardMap = {
+      '+': () => operationButtonClicked('+'),
+      '-': () => operationButtonClicked('-'),
+      '*': () => operationButtonClicked('*'),
+      '/': () => operationButtonClicked('/'),
+      '.': () => floatPointButtonClicked(),
+      'Enter': () => startCalc(),
+      'Backspace': () => deleteButtonClicked(),
+      'NumpadAdd': () => operationButtonClicked('+'),
+      'NumpadSubtract': () => operationButtonClicked('-'),
+      'NumpadMultiply': () => operationButtonClicked('*'),
+      'NumpadDivide': () => operationButtonClicked('/'),
+      'NumpadEnter': () => startCalc(),
+  }
+
+  if(keyboardMap[key]){
+    e.preventDefault();
+    keyboardMap[key]();
+  }else if(keyboardMap[code]){
+    e.preventDefault();
+    keyboardMap[code]();
+  }
+})
