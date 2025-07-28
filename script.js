@@ -71,8 +71,18 @@ function startCalc() {
 
   result = operations[operator](num1, num2);
   if (!isNaN(result) && isFinite(result)) {
-    resultDisplay.textContent = Number(result.toFixed(10));
-    firstNumber = String(result);
+    const maxDisplayLength = 12;
+    let fixedResult;
+    const resultString = String(result);
+    if(resultString.length > maxDisplayLength){
+      let precision = maxDisplayLength - 5; // para caber os caracteres adicionais
+
+      if(precision < 0) precision = 0;
+      fixedResult = result.toExponential(precision);
+      fixedResult = fixedResult.replace(/(\.\d*?)0+e/, '  $1e').replace(/\.e/, 'e');
+    }else{fixedResult = Number(result.toFixed(10))};
+    resultDisplay.textContent = fixedResult;
+    firstNumber = resultString;
     secondNumber = "0";
     operator = null;
     waitingForNewNumber = true;
